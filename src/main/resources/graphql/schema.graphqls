@@ -1,0 +1,62 @@
+type Query {
+    hero(episode: Episode) : Character
+}
+
+enum Episode { NEW_HOPE, EMPIRE, JEDI }
+enum Unit { METER, FOOT }
+
+""" The hero's of the movie 'Star Wars'."""
+interface Character {
+    id: ID!
+    name: String
+    friends: [Character]
+    appearsIn: [Episode]
+}
+
+type Human implements Character {
+    id: ID!
+    name: String
+    friends: [Character]
+    appearsIn: [Episode]
+    homePlanet: String
+    height(unit: Unit = METER): Float
+    starships: [Starship]
+    totalCredits: Int
+}
+
+type Droid implements Character {
+    id: ID!
+    name: String
+    friends: [Character]
+    appearsIn: [Episode]
+    primaryFunction: String
+}
+
+type Starship {
+    id: ID!
+    name: String!
+    length(unit: Unit = METER): Float
+}
+
+"""A rating for a movie episode by a user. Stars can be given from 0-5."""
+type Review {
+    id: ID!
+    stars: Int!
+    commentary: String
+}
+
+type Mutation {
+    createReview(ep: Episode!, review: ReviewInput!): Review
+}
+
+input ReviewInput {
+    stars: Int!
+    commentary: String
+}
+
+# currently disabled because the java implementation is not working yet
+# type Query {
+#     search(text: String): SearchResult
+# }
+
+# union SearchResult = Human | Droid | Starship

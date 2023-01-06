@@ -1,0 +1,6 @@
+extend type Query {
+    """ custom types which aren't defined in the graphql documentation, but to better demonstrate the power of GraphQL"""
+    heros: [Character!]!
+    searchHero(name: String): [Character]
+    reviews(episode: Episode): [Review!]!
+}
